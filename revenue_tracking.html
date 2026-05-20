@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="finance-container">
+    <div class="dashboard-hero">
+        <div>
+            <span class="dashboard-badge">Revenue Tracking</span>
+            <h1>Revenue Report</h1>
+            <p>Track successful payment revenue and monthly financial performance.</p>
+        </div>
+
+        <div class="dashboard-hero-actions">
+            <a href="{{ url_for('finance.finance_home') }}" class="btn">Finance Home</a>
+            <a href="{{ url_for('analytics.revenue_report') }}" class="btn btn-success">Analytics Report</a>
+        </div>
+    </div>
+
+    <div class="dashboard-cards">
+        <div class="dashboard-card metric-card blue-card">
+            <div class="metric-icon">₹</div>
+            <h3>Total Revenue</h3>
+            <p>₹{{ summary.total_revenue }}</p>
+            <span>Successful payment revenue</span>
+        </div>
+
+        <div class="dashboard-card metric-card green-card">
+            <div class="metric-icon">✅</div>
+            <h3>Successful Payments</h3>
+            <p>{{ summary.successful_payments }}</p>
+            <span>Completed transactions</span>
+        </div>
+
+        <div class="dashboard-card metric-card orange-card">
+            <div class="metric-icon">⏳</div>
+            <h3>Pending Payments</h3>
+            <p>{{ summary.pending_payments }}</p>
+            <span>Awaiting confirmation</span>
+        </div>
+
+        <div class="dashboard-card metric-card purple-card">
+            <div class="metric-icon">⚠️</div>
+            <h3>Failed Payments</h3>
+            <p>{{ summary.failed_payments }}</p>
+            <span>Need follow-up</span>
+        </div>
+    </div>
+
+    <div class="finance-section">
+        <div class="section-header">
+            <h2>Monthly Revenue</h2>
+            <p>Revenue grouped by successful payment month.</p>
+        </div>
+
+        <table class="finance-table">
+            <thead>
+                <tr>
+                    <th>Month</th>
+                    <th>Revenue</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for revenue in monthly_revenue %}
+                <tr>
+                    <td><strong>{{ revenue[0] }}</strong></td>
+                    <td>₹{{ revenue[1] }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="2">No revenue records found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

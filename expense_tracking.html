@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="finance-container">
+    <div class="dashboard-hero">
+        <div>
+            <span class="dashboard-badge">Expense Tracking</span>
+            <h1>Expense Overview</h1>
+            <p>Track operational costs, cloud expenses, marketing cost, and software tools.</p>
+        </div>
+
+        <div class="dashboard-hero-actions">
+            <a href="{{ url_for('finance.finance_home') }}" class="btn">Finance Home</a>
+            <a href="{{ url_for('analytics.ai_insights') }}" class="btn btn-success">AI Insights</a>
+        </div>
+    </div>
+
+    <div class="dashboard-cards">
+        <div class="dashboard-card metric-card blue-card">
+            <div class="metric-icon">₹</div>
+            <h3>Total Expenses</h3>
+            <p>₹{{ summary.total_expenses }}</p>
+            <span>Total expense amount</span>
+        </div>
+
+        <div class="dashboard-card metric-card green-card">
+            <div class="metric-icon">✅</div>
+            <h3>Paid Expenses</h3>
+            <p>₹{{ summary.paid_expenses }}</p>
+            <span>Already paid costs</span>
+        </div>
+
+        <div class="dashboard-card metric-card orange-card">
+            <div class="metric-icon">⏳</div>
+            <h3>Pending Expenses</h3>
+            <p>₹{{ summary.pending_expenses }}</p>
+            <span>Yet to be paid</span>
+        </div>
+
+        <div class="dashboard-card metric-card purple-card">
+            <div class="metric-icon">📊</div>
+            <h3>Expense Records</h3>
+            <p>{{ summary.expense_count }}</p>
+            <span>Total expense entries</span>
+        </div>
+    </div>
+
+    <div class="finance-section">
+        <table class="finance-table">
+            <thead>
+                <tr>
+                    <th>Expense ID</th>
+                    <th>Category</th>
+                    <th>Amount</th>
+                    <th>Month</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for expense in expenses %}
+                <tr>
+                    <td><strong>{{ expense.expense_id }}</strong></td>
+                    <td>{{ expense.category }}</td>
+                    <td>₹{{ expense.amount }}</td>
+                    <td>{{ expense.month }}</td>
+
+                    <td>
+                        {% if expense.status == "Paid" %}
+                            <span class="status-pill success">Paid</span>
+                        {% else %}
+                            <span class="status-pill warning">Pending</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="5">No expense records found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="dashboard-section ai-panel">
+        <div class="section-header">
+            <h2>Expense Insight</h2>
+            <p>Basic finance recommendation</p>
+        </div>
+
+        <div class="ai-card">
+            <h3>Cost Optimization</h3>
+            <p>
+                Review recurring server hosting and software expenses monthly.
+                Compare expense growth against revenue growth to maintain profitability.
+            </p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="finance-container">
+    <div class="dashboard-hero">
+        <div>
+            <span class="dashboard-badge">Finance Dashboard</span>
+            <h1>Finance Control Center</h1>
+            <p>Track revenue, invoices, transactions, taxes, payments, and financial health.</p>
+        </div>
+
+        <div class="dashboard-hero-actions">
+            <a href="{{ url_for('invoices.invoice_create') }}" class="btn">Create Invoice</a>
+            <a href="{{ url_for('billing.payment_create') }}" class="btn btn-success">Record Payment</a>
+        </div>
+    </div>
+
+    <div class="dashboard-cards">
+        <div class="dashboard-card metric-card blue-card">
+            <div class="metric-icon">₹</div>
+            <h3>Total Revenue</h3>
+            <p>₹{{ finance_summary.total_revenue }}</p>
+            <span>Successful payment revenue</span>
+        </div>
+
+        <div class="dashboard-card metric-card green-card">
+            <div class="metric-icon">💳</div>
+            <h3>Collected Amount</h3>
+            <p>₹{{ finance_summary.collected_amount }}</p>
+            <span>Total collected payments</span>
+        </div>
+
+        <div class="dashboard-card metric-card orange-card">
+            <div class="metric-icon">⚠️</div>
+            <h3>Failed Payments</h3>
+            <p>{{ finance_summary.failed_payments }}</p>
+            <span>Transactions needing review</span>
+        </div>
+
+        <div class="dashboard-card metric-card purple-card">
+            <div class="metric-icon">🧾</div>
+            <h3>Total Invoices</h3>
+            <p>{{ finance_summary.total_invoices }}</p>
+            <span>Generated invoice records</span>
+        </div>
+    </div>
+
+    <div class="dashboard-grid">
+        <div class="dashboard-section">
+            <div class="section-header">
+                <h2>Finance Actions</h2>
+                <p>Access important finance workflows.</p>
+            </div>
+
+            <div class="quick-actions">
+                <a href="{{ url_for('finance.transaction_list') }}">Transactions</a>
+                <a href="{{ url_for('finance.revenue_tracking') }}">Revenue Tracking</a>
+                <a href="{{ url_for('finance.tax_reports') }}">Tax Reports</a>
+                <a href="{{ url_for('finance.expense_tracking') }}">Expense Tracking</a>
+                <a href="{{ url_for('invoices.invoice_list') }}">Invoices</a>
+                <a href="{{ url_for('billing.payment_history') }}">Payments</a>
+            </div>
+        </div>
+
+        <div class="dashboard-section ai-panel">
+            <div class="section-header">
+                <h2>Finance Health</h2>
+                <p>Payment and invoice summary</p>
+            </div>
+
+            <div class="ai-card">
+                <h3>Collection Summary</h3>
+                <p>
+                    The system has collected <strong>₹{{ finance_summary.collected_amount }}</strong>
+                    from successful payments. There are 
+                    <strong>{{ finance_summary.unpaid_invoices }}</strong> unpaid invoices and
+                    <strong>{{ finance_summary.overdue_invoices }}</strong> overdue invoices.
+                </p>
+
+                <a href="{{ url_for('analytics.ai_insights') }}" class="btn btn-success">View AI Insights</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="finance-section">
+        <div class="section-header">
+            <h2>Invoice Status Overview</h2>
+            <p>Current invoice and payment distribution.</p>
+        </div>
+
+        <div class="finance-status-grid">
+            <div class="finance-status-card">
+                <span>Paid Invoices</span>
+                <strong>{{ finance_summary.paid_invoices }}</strong>
+            </div>
+
+            <div class="finance-status-card">
+                <span>Unpaid Invoices</span>
+                <strong>{{ finance_summary.unpaid_invoices }}</strong>
+            </div>
+
+            <div class="finance-status-card">
+                <span>Overdue Invoices</span>
+                <strong>{{ finance_summary.overdue_invoices }}</strong>
+            </div>
+
+            <div class="finance-status-card">
+                <span>Pending Payments</span>
+                <strong>{{ finance_summary.pending_payments }}</strong>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

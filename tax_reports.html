@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="finance-container">
+    <div class="dashboard-hero">
+        <div>
+            <span class="dashboard-badge">Tax Reports</span>
+            <h1>Tax Summary</h1>
+            <p>View invoice tax collection, paid tax, unpaid tax, and tax-related invoice records.</p>
+        </div>
+
+        <div class="dashboard-hero-actions">
+            <a href="{{ url_for('finance.finance_home') }}" class="btn">Finance Home</a>
+            <a href="{{ url_for('invoices.invoice_list') }}" class="btn btn-success">Invoices</a>
+        </div>
+    </div>
+
+    <div class="dashboard-cards">
+        <div class="dashboard-card metric-card blue-card">
+            <div class="metric-icon">🧾</div>
+            <h3>Total Invoices</h3>
+            <p>{{ summary.total_invoices }}</p>
+            <span>Invoices included in tax report</span>
+        </div>
+
+        <div class="dashboard-card metric-card green-card">
+            <div class="metric-icon">₹</div>
+            <h3>Total Tax</h3>
+            <p>₹{{ summary.total_tax }}</p>
+            <span>Overall tax amount</span>
+        </div>
+
+        <div class="dashboard-card metric-card orange-card">
+            <div class="metric-icon">⏳</div>
+            <h3>Unpaid Tax</h3>
+            <p>₹{{ summary.unpaid_tax }}</p>
+            <span>Tax from unpaid invoices</span>
+        </div>
+
+        <div class="dashboard-card metric-card purple-card">
+            <div class="metric-icon">💰</div>
+            <h3>Total Invoice Value</h3>
+            <p>₹{{ summary.total_amount }}</p>
+            <span>Total billed value</span>
+        </div>
+    </div>
+
+    <div class="finance-section">
+        <table class="finance-table">
+            <thead>
+                <tr>
+                    <th>Invoice ID</th>
+                    <th>Invoice Number</th>
+                    <th>Company</th>
+                    <th>Amount</th>
+                    <th>Tax</th>
+                    <th>Total Amount</th>
+                    <th>Due Date</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for invoice in invoices %}
+                <tr>
+                    <td>{{ invoice[0] }}</td>
+                    <td><strong>{{ invoice[1] }}</strong></td>
+                    <td>{{ invoice[2] }}</td>
+                    <td>₹{{ invoice[3] }}</td>
+                    <td>₹{{ invoice[4] }}</td>
+                    <td>₹{{ invoice[5] }}</td>
+                    <td>{{ invoice[6] }}</td>
+
+                    <td>
+                        {% if invoice[7] == "paid" %}
+                            <span class="status-pill success">Paid</span>
+                        {% elif invoice[7] == "overdue" %}
+                            <span class="status-pill danger">Overdue</span>
+                        {% else %}
+                            <span class="status-pill warning">Unpaid</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="8">No tax report data found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
