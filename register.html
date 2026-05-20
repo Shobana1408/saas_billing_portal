@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="auth-page">
+    <div class="auth-left">
+        <span class="hero-badge">Create Account</span>
+
+        <h1>Start managing SaaS billing smarter</h1>
+
+        <p>
+            Register a new user, assign a role, connect a company, and access
+            billing workflows based on permissions.
+        </p>
+
+        <div class="auth-info-grid">
+            <div class="auth-info-card">
+                <h3>4 Roles</h3>
+                <p>Admin, company, finance, user</p>
+            </div>
+
+            <div class="auth-info-card">
+                <h3>MySQL</h3>
+                <p>Structured billing database</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="auth-box modern-auth-box register-box">
+        <div class="auth-header">
+            <h2>Register</h2>
+            <p>Create a new SaaS billing portal account</p>
+        </div>
+
+        <form id="registerForm" method="POST" action="{{ url_for('auth.register') }}">
+            <label for="full_name">Full Name</label>
+            <input 
+                type="text" 
+                name="full_name" 
+                id="full_name" 
+                placeholder="Enter full name" 
+                required
+            >
+
+            <label for="email">Email Address</label>
+            <input 
+                type="email" 
+                name="email" 
+                id="email" 
+                placeholder="Enter email address" 
+                required
+            >
+
+            <label for="password">Password</label>
+            <input 
+                type="password" 
+                name="password" 
+                id="password" 
+                placeholder="Minimum 6 characters" 
+                required
+            >
+
+            <label for="role_id">Role</label>
+            <select name="role_id" id="role_id" required>
+                <option value="">Select Role</option>
+                {% for role in roles %}
+                    <option value="{{ role[0] }}">{{ role[1] }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="company_id">Company</label>
+            <select name="company_id" id="company_id" required>
+                <option value="">Select Company</option>
+                {% for company in companies %}
+                    <option value="{{ company[0] }}">{{ company[1] }}</option>
+                {% endfor %}
+            </select>
+
+            <button type="submit" class="auth-btn">Create Account</button>
+        </form>
+
+        <div class="auth-link">
+            <p>
+                Already have an account?
+                <a href="{{ url_for('auth.login') }}">Login here</a>
+            </p>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/auth.js') }}"></script>
+{% endblock %}

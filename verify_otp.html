@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="auth-body">
+    <div class="auth-box">
+        <h2>Verify OTP</h2>
+
+        <form method="POST" action="{{ url_for('auth.verify_otp') }}">
+            <label for="otp">Enter OTP</label>
+            <input type="text" name="otp" id="otp" placeholder="Enter OTP" required>
+
+            <button type="submit" class="auth-btn">Verify OTP</button>
+        </form>
+
+        <div class="auth-link">
+            <a href="{{ url_for('auth.login') }}">Back to Login</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

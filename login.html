@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="auth-page">
+    <div class="auth-left">
+        <span class="hero-badge">Secure Login</span>
+
+        <h1>Welcome back to your billing workspace</h1>
+
+        <p>
+            Access your SaaS billing dashboard, manage invoices, track payments,
+            and view AI-powered revenue insights.
+        </p>
+
+        <div class="auth-info-grid">
+            <div class="auth-info-card">
+                <h3>RBAC</h3>
+                <p>Role-based dashboard access</p>
+            </div>
+
+            <div class="auth-info-card">
+                <h3>AI</h3>
+                <p>Revenue and churn insights</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="auth-box modern-auth-box">
+        <div class="auth-header">
+            <h2>Login</h2>
+            <p>Enter your credentials to continue</p>
+        </div>
+
+        <form id="loginForm" method="POST" action="{{ url_for('auth.login') }}">
+            <label for="email">Email Address</label>
+            <input 
+                type="email" 
+                name="email" 
+                id="email" 
+                placeholder="admin@saasportal.com" 
+                required
+            >
+
+            <label for="password">Password</label>
+            <input 
+                type="password" 
+                name="password" 
+                id="password" 
+                placeholder="Enter your password" 
+                required
+            >
+
+            <button type="submit" class="auth-btn">Login to Dashboard</button>
+        </form>
+
+        <div class="sample-logins">
+            <h4>Sample Logins</h4>
+
+            <div class="sample-login-item">
+                <strong>Super Admin</strong>
+                <span>admin@saasportal.com / admin123</span>
+            </div>
+
+            <div class="sample-login-item">
+                <strong>Company Admin</strong>
+                <span>company@technova.com / company123</span>
+            </div>
+
+            <div class="sample-login-item">
+                <strong>Finance Manager</strong>
+                <span>finance@technova.com / finance123</span>
+            </div>
+
+            <div class="sample-login-item">
+                <strong>User</strong>
+                <span>user@cloudsync.com / user123</span>
+            </div>
+        </div>
+
+        <div class="auth-link">
+            <p>
+                <a href="{{ url_for('auth.forgot_password') }}">Forgot Password?</a>
+            </p>
+
+            <p>
+                Don't have an account?
+                <a href="{{ url_for('auth.register') }}">Create account</a>
+            </p>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/auth.js') }}"></script>
+{% endblock %}
