@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="billing-container">
+    <div class="dashboard-hero">
+        <div>
+            <span class="dashboard-badge">Billing Overview</span>
+            <h1>Billing Center</h1>
+            <p>View billing performance, invoices, payments, and collection status.</p>
+        </div>
+
+        <div class="dashboard-hero-actions">
+            <a href="{{ url_for('invoices.invoice_list') }}" class="btn">Invoices</a>
+            <a href="{{ url_for('billing.payment_history') }}" class="btn btn-success">Payments</a>
+        </div>
+    </div>
+
+    <div class="dashboard-cards">
+        <div class="dashboard-card metric-card blue-card">
+            <div class="metric-icon">🧾</div>
+            <h3>Total Invoices</h3>
+            <p>{{ invoice_summary.total }}</p>
+            <span>Invoice records</span>
+        </div>
+
+        <div class="dashboard-card metric-card green-card">
+            <div class="metric-icon">✅</div>
+            <h3>Paid Invoices</h3>
+            <p>{{ invoice_summary.paid }}</p>
+            <span>Completed billing</span>
+        </div>
+
+        <div class="dashboard-card metric-card orange-card">
+            <div class="metric-icon">💳</div>
+            <h3>Payments</h3>
+            <p>{{ payment_summary.total }}</p>
+            <span>Total transactions</span>
+        </div>
+
+        <div class="dashboard-card metric-card purple-card">
+            <div class="metric-icon">₹</div>
+            <h3>Collected</h3>
+            <p>₹{{ payment_summary.amount }}</p>
+            <span>Successful payments</span>
+        </div>
+    </div>
+
+    <div class="dashboard-grid">
+        <div class="dashboard-section">
+            <div class="section-header">
+                <h2>Billing Actions</h2>
+                <p>Manage your billing workflow</p>
+            </div>
+
+            <div class="quick-actions">
+                <a href="{{ url_for('invoices.invoice_list') }}">View Invoices</a>
+                <a href="{{ url_for('billing.payment_history') }}">Payment History</a>
+
+                {% if current_user.role_id in [1, 3] %}
+                    <a href="{{ url_for('invoices.invoice_create') }}">Create Invoice</a>
+                    <a href="{{ url_for('billing.payment_create') }}">Create Payment</a>
+                {% endif %}
+
+                {% if current_user.role_id == 1 %}
+                    <a href="{{ url_for('billing.billing_settings') }}">Billing Settings</a>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="dashboard-section ai-panel">
+            <div class="section-header">
+                <h2>Payment Insight</h2>
+                <p>Collection status</p>
+            </div>
+
+            <div class="ai-card">
+                <h3>Payment Summary</h3>
+                <p>
+                    You have collected <strong>₹{{ payment_summary.amount }}</strong> through successful payments.
+                    There are <strong>{{ payment_summary.pending }}</strong> pending payments and 
+                    <strong>{{ payment_summary.failed }}</strong> failed payments.
+                </p>
+
+                <a href="{{ url_for('analytics.ai_insights') }}" class="btn btn-success">View AI Insights</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="billing-container">
+    <div class="dashboard-hero">
+        <div>
+            <span class="dashboard-badge">Create Payment</span>
+            <h1>Record Payment</h1>
+            <p>Add a payment transaction and automatically update invoice status.</p>
+        </div>
+
+        <div class="dashboard-hero-actions">
+            <a href="{{ url_for('billing.payment_history') }}" class="btn">Back to Payments</a>
+        </div>
+    </div>
+
+    <div class="billing-card">
+        <form id="paymentForm" method="POST" action="{{ url_for('billing.payment_create') }}">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="invoice_id">Invoice</label>
+                    <select name="invoice_id" id="invoice_id" class="form-control" required>
+                        <option value="">Select Invoice</option>
+                        {% for invoice in invoices %}
+                            <option value="{{ invoice[0] }}">
+                                {{ invoice[1] }} - {{ invoice[2] }} - ₹{{ invoice[3] }} - {{ invoice[4] }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="payment_method">Payment Method</label>
+                    <select name="payment_method" id="payment_method" class="form-control" required>
+                        <option value="">Select Payment Method</option>
+                        <option value="UPI">UPI</option>
+                        <option value="Credit Card">Credit Card</option>
+                        <option value="Debit Card">Debit Card</option>
+                        <option value="Net Banking">Net Banking</option>
+                        <option value="Cash">Cash</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="payment_status">Payment Status</label>
+                    <select name="payment_status" id="payment_status" class="form-control" required>
+                        <option value="success">Success</option>
+                        <option value="failed">Failed</option>
+                        <option value="pending">Pending</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="transaction_id">Transaction ID</label>
+                    <input 
+                        type="text" 
+                        name="transaction_id" 
+                        id="transaction_id" 
+                        class="form-control" 
+                        placeholder="Example: TXN123456"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="amount_paid">Amount Paid</label>
+                    <input 
+                        type="number" 
+                        name="amount_paid" 
+                        id="amount_paid" 
+                        class="form-control" 
+                        step="0.01" 
+                        min="0" 
+                        required
+                    >
+                </div>
+            </div>
+
+            <button type="submit" class="btn" onclick="return confirmPayment()">Save Payment</button>
+            <a href="{{ url_for('billing.payment_history') }}" class="btn btn-danger">Cancel</a>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/billing.js') }}"></script>
+{% endblock %}
