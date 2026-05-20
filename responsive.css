@@ -1,0 +1,180 @@
+@media screen and (max-width: 1200px) {
+    .dashboard-cards,
+    .analytics-grid,
+    .finance-grid,
+    .billing-summary {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .hero-section {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-text h1 {
+        font-size: 44px;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .sidebar {
+        width: 240px;
+    }
+
+    .app-main {
+        margin-left: 240px;
+    }
+
+    .sidebar-logo {
+        width: 180px;
+    }
+
+    .topbar {
+        padding: 16px 22px;
+    }
+
+    .page-content {
+        padding: 24px;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .public-navbar {
+        padding: 12px 20px;
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .public-main {
+        padding: 26px;
+    }
+
+    .hero-section {
+        grid-template-columns: 1fr;
+        min-height: auto;
+    }
+
+    .hero-text {
+        padding: 5px;
+    }
+
+    .hero-text h1 {
+        font-size: 38px;
+    }
+
+    .feature-section {
+        grid-template-columns: 1fr;
+    }
+
+    .preview-text h2 {
+        font-size: 28px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .dashboard-cards,
+    .analytics-grid,
+    .finance-grid,
+    .billing-summary {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+        max-height: 420px;
+    }
+
+    .app-main {
+        margin-left: 0;
+    }
+
+    .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+    }
+
+    .topbar-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .page-content {
+        padding: 18px;
+    }
+
+    .public-logo {
+        width: 200px;
+    }
+
+    .hero-text h1 {
+        font-size: 34px;
+    }
+
+    .hero-text p {
+        font-size: 16px;
+    }
+
+    .hero-image-box,
+    .preview-section {
+        padding: 12px;
+        border-radius: 20px;
+    }
+
+    table {
+        font-size: 14px;
+    }
+
+    .auth-box {
+        width: 90%;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .public-links {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .public-logo {
+        width: 180px;
+    }
+
+    .sidebar-logo {
+        width: 180px;
+    }
+
+    .dashboard-header h1,
+    .analytics-title,
+    .finance-title,
+    .billing-title,
+    .invoice-title,
+    .admin-title {
+        font-size: 22px;
+    }
+
+    .dashboard-card p,
+    .analytics-card p,
+    .finance-card p,
+    .billing-box p {
+        font-size: 22px;
+    }
+
+    .hero-text h1 {
+        font-size: 30px;
+        letter-spacing: -0.5px;
+    }
+
+    .hero-actions {
+        flex-direction: column;
+    }
+
+    button,
+    .btn,
+    .admin-btn {
+        width: 100%;
+        margin-top: 8px;
+        text-align: center;
+    }
+}

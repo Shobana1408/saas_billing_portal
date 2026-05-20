@@ -1,0 +1,57 @@
+.billing-container {
+    padding: 25px;
+}
+
+.billing-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 20px;
+}
+
+.billing-card {
+    background: white;
+    padding: 22px;
+    border-radius: 14px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    margin-bottom: 20px;
+}
+
+.billing-summary {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+}
+
+.billing-box {
+    background: #eff6ff;
+    padding: 18px;
+    border-radius: 12px;
+    border-left: 5px solid #2563eb;
+}
+
+.billing-box h3 {
+    color: #374151;
+    font-size: 16px;
+}
+
+.billing-box p {
+    font-size: 24px;
+    font-weight: bold;
+    color: #1d4ed8;
+}
+
+.payment-status-success {
+    color: #16a34a;
+    font-weight: bold;
+}
+
+.payment-status-failed {
+    color: #dc2626;
+    font-weight: bold;
+}
+
+.payment-status-pending {
+    color: #d97706;
+    font-weight: bold;
+}

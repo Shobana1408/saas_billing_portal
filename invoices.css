@@ -1,0 +1,65 @@
+.invoice-container {
+    padding: 25px;
+}
+
+.invoice-title {
+    font-size: 28px;
+    color: #1f2937;
+    margin-bottom: 20px;
+}
+
+.invoice-card {
+    background: white;
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: 0 5px 16px rgba(0, 0, 0, 0.08);
+}
+
+.invoice-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 25px;
+}
+
+.invoice-header h2 {
+    color: #2563eb;
+}
+
+.invoice-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.invoice-table th,
+.invoice-table td {
+    padding: 14px;
+    border-bottom: 1px solid #e5e7eb;
+    text-align: left;
+}
+
+.invoice-table th {
+    background: #2563eb;
+    color: white;
+}
+
+.invoice-total {
+    text-align: right;
+    margin-top: 20px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.invoice-paid {
+    color: #16a34a;
+    font-weight: bold;
+}
+
+.invoice-unpaid {
+    color: #dc2626;
+    font-weight: bold;
+}
+
+.invoice-overdue {
+    color: #d97706;
+    font-weight: bold;
+}
