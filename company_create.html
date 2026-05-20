@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="admin-container">
+    <div class="dashboard-hero">
+        <div>
+            <span class="dashboard-badge">Create Company</span>
+            <h1>Add New Company</h1>
+            <p>Create a new company workspace for subscription billing and user management.</p>
+        </div>
+
+        <div class="dashboard-hero-actions">
+            <a href="{{ url_for('companies.company_list') }}" class="btn">Back to Companies</a>
+        </div>
+    </div>
+
+    <div class="admin-card">
+        <form method="POST" action="{{ url_for('companies.company_create') }}">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="company_name">Company Name</label>
+                    <input 
+                        type="text" 
+                        name="company_name" 
+                        id="company_name" 
+                        class="form-control" 
+                        placeholder="Example: TechNova Solutions"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="company_email">Company Email</label>
+                    <input 
+                        type="email" 
+                        name="company_email" 
+                        id="company_email" 
+                        class="form-control" 
+                        placeholder="contact@example.com"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="company_phone">Company Phone</label>
+                    <input 
+                        type="text" 
+                        name="company_phone" 
+                        id="company_phone" 
+                        class="form-control" 
+                        placeholder="9876543210"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="industry">Industry</label>
+                    <input 
+                        type="text" 
+                        name="industry" 
+                        id="industry" 
+                        class="form-control" 
+                        placeholder="Software, Finance, EdTech, Healthcare"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="total_employees">Total Employees</label>
+                    <input 
+                        type="number" 
+                        name="total_employees" 
+                        id="total_employees" 
+                        class="form-control" 
+                        min="0" 
+                        value="0"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="company_address">Company Address</label>
+                    <textarea 
+                        name="company_address" 
+                        id="company_address" 
+                        class="form-control" 
+                        placeholder="Enter company address"
+                    ></textarea>
+                </div>
+            </div>
+
+            <button type="submit" class="btn">Create Company</button>
+            <a href="{{ url_for('companies.company_list') }}" class="btn btn-danger">Cancel</a>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
