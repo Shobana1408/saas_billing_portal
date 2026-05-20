@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Payment Failed</title>
+</head>
+<body style="font-family: Arial, sans-serif; background-color: #f3f4f6; padding: 20px;">
+
+    <div style="max-width: 600px; margin: auto; background: white; padding: 25px; border-radius: 12px;">
+        <h2 style="color: #dc2626;">Payment Failed</h2>
+
+        <p>Hello {{ user_name }},</p>
+
+        <p>
+            Unfortunately, your payment could not be processed.
+        </p>
+
+        <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+            <tr>
+                <td style="padding: 10px; border-bottom: 1px solid #e5e7eb;"><strong>Invoice Number</strong></td>
+                <td style="padding: 10px; border-bottom: 1px solid #e5e7eb;">{{ invoice_number }}</td>
+            </tr>
+
+            <tr>
+                <td style="padding: 10px; border-bottom: 1px solid #e5e7eb;"><strong>Amount</strong></td>
+                <td style="padding: 10px; border-bottom: 1px solid #e5e7eb;">₹{{ amount }}</td>
+            </tr>
+
+            <tr>
+                <td style="padding: 10px;"><strong>Status</strong></td>
+                <td style="padding: 10px; color: #dc2626;"><strong>Failed</strong></td>
+            </tr>
+        </table>
+
+        <p style="margin-top: 20px;">
+            Please retry the payment or contact the finance team for support.
+        </p>
+
+        <p>Thank you,<br>SaaS Billing Portal Team</p>
+    </div>
+
+</body>
+</html>

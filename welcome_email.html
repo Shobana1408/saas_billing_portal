@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome Email</title>
+</head>
+<body style="font-family: Arial, sans-serif; background-color: #f3f4f6; padding: 20px;">
+
+    <div style="max-width: 600px; margin: auto; background: white; padding: 25px; border-radius: 12px;">
+        <h2 style="color: #2563eb;">Welcome to SaaS Billing Portal</h2>
+
+        <p>Hello {{ user_name }},</p>
+
+        <p>
+            Welcome to the AI-Powered Role-Based SaaS Billing & Analytics Portal.
+        </p>
+
+        <p>
+            Your account has been created successfully. You can now access your dashboard,
+            manage billing details, view invoices, track payments, and explore analytics features
+            based on your role.
+        </p>
+
+        <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+            <tr>
+                <td style="padding: 10px; border-bottom: 1px solid #e5e7eb;"><strong>Email</strong></td>
+                <td style="padding: 10px; border-bottom: 1px solid #e5e7eb;">{{ email }}</td>
+            </tr>
+
+            <tr>
+                <td style="padding: 10px;"><strong>Role</strong></td>
+                <td style="padding: 10px;">{{ role_name }}</td>
+            </tr>
+        </table>
+
+        <p style="margin-top: 20px;">
+            Thank you for joining us.
+        </p>
+
+        <p>Regards,<br>SaaS Billing Portal Team</p>
+    </div>
+
+</body>
+</html>
