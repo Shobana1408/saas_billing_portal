@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="admin-container">
+    <div class="dashboard-hero">
+        <div>
+            <span class="dashboard-badge">User Management</span>
+            <h1>Users</h1>
+            <p>Manage platform users, roles, company mapping, and account status.</p>
+        </div>
+
+        <div class="dashboard-hero-actions">
+            <a href="{{ url_for('users.create_user') }}" class="btn">Create User</a>
+
+            {% if current_user.role_id == 1 %}
+                <a href="{{ url_for('users.role_assign') }}" class="btn btn-success">Assign Role</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="admin-card">
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>User</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Company</th>
+                    <th>Status</th>
+                    <th>Created At</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user[0] }}</td>
+
+                    <td>
+                        <strong>{{ user[1] }}</strong>
+                    </td>
+
+                    <td>{{ user[2] }}</td>
+                    <td>{{ user[3] }}</td>
+                    <td>{{ user[4] }}</td>
+
+                    <td>
+                        {% if user[5] == "active" %}
+                            <span class="status-pill success">Active</span>
+                        {% elif user[5] == "blocked" %}
+                            <span class="status-pill danger">Blocked</span>
+                        {% else %}
+                            <span class="status-pill warning">Inactive</span>
+                        {% endif %}
+                    </td>
+
+                    <td>{{ user[6] }}</td>
+
+                    <td>
+                        <a href="{{ url_for('users.user_details', user_id=user[0]) }}" class="btn">View</a>
+
+                        {% if user[5] != "blocked" %}
+                        <form 
+                            method="POST" 
+                            action="{{ url_for('users.update_user_status', user_id=user[0]) }}" 
+                            style="display: inline-block;"
+                        >
+                            <input type="hidden" name="status" value="blocked">
+
+                            <button 
+                                type="submit" 
+                                class="btn btn-danger"
+                                onclick="return confirm('Are you sure you want to block this user?')"
+                            >
+                                Block
+                            </button>
+                        </form>
+                        {% else %}
+                        <form 
+                            method="POST" 
+                            action="{{ url_for('users.update_user_status', user_id=user[0]) }}" 
+                            style="display: inline-block;"
+                        >
+                            <input type="hidden" name="status" value="active">
+
+                            <button 
+                                type="submit" 
+                                class="btn btn-success"
+                                onclick="return confirm('Activate this user?')"
+                            >
+                                Activate
+                            </button>
+                        </form>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="8">No users found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

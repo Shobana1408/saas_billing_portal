@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="admin-container">
+    <div class="dashboard-hero">
+        <div>
+            <span class="dashboard-badge">User Details</span>
+
+            {% if user %}
+                <h1>{{ user[1] }}</h1>
+                <p>View role, company, status, and account information.</p>
+            {% else %}
+                <h1>User Not Found</h1>
+                <p>The selected user could not be found.</p>
+            {% endif %}
+        </div>
+
+        <div class="dashboard-hero-actions">
+            <a href="{{ url_for('users.user_list') }}" class="btn">Back to Users</a>
+        </div>
+    </div>
+
+    <div class="admin-card">
+        {% if user %}
+            <div class="details-grid">
+                <div class="detail-box">
+                    <span>User ID</span>
+                    <strong>{{ user[0] }}</strong>
+                </div>
+
+                <div class="detail-box">
+                    <span>Full Name</span>
+                    <strong>{{ user[1] }}</strong>
+                </div>
+
+                <div class="detail-box">
+                    <span>Email</span>
+                    <strong>{{ user[2] }}</strong>
+                </div>
+
+                <div class="detail-box">
+                    <span>Role</span>
+                    <strong>{{ user[4] }}</strong>
+                </div>
+
+                <div class="detail-box">
+                    <span>Company</span>
+                    <strong>{{ user[6] }}</strong>
+                </div>
+
+                <div class="detail-box">
+                    <span>Status</span>
+
+                    {% if user[7] == "active" %}
+                        <strong class="status-text-success">Active</strong>
+                    {% elif user[7] == "blocked" %}
+                        <strong class="status-text-danger">Blocked</strong>
+                    {% else %}
+                        <strong class="status-text-warning">Inactive</strong>
+                    {% endif %}
+                </div>
+
+                <div class="detail-box">
+                    <span>Created At</span>
+                    <strong>{{ user[8] }}</strong>
+                </div>
+            </div>
+
+            <br>
+
+            <form method="POST" action="{{ url_for('users.update_user_status', user_id=user[0]) }}">
+                <div class="form-group">
+                    <label for="status">Update Status</label>
+                    <select name="status" id="status" class="form-control">
+                        <option value="active" {% if user[7] == "active" %}selected{% endif %}>Active</option>
+                        <option value="inactive" {% if user[7] == "inactive" %}selected{% endif %}>Inactive</option>
+                        <option value="blocked" {% if user[7] == "blocked" %}selected{% endif %}>Blocked</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn">Update Status</button>
+                <a href="{{ url_for('users.user_list') }}" class="btn btn-danger">Back</a>
+            </form>
+        {% else %}
+            <p>User not found.</p>
+            <br>
+            <a href="{{ url_for('users.user_list') }}" class="btn">Back to Users</a>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

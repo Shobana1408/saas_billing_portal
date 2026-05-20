@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="admin-container">
+    <div class="dashboard-hero">
+        <div>
+            <span class="dashboard-badge">Edit Profile</span>
+            <h1>Update Account</h1>
+            <p>Update your basic account information.</p>
+        </div>
+
+        <div class="dashboard-hero-actions">
+            <a href="{{ url_for('users.profile') }}" class="btn">Back to Profile</a>
+        </div>
+    </div>
+
+    <div class="admin-card">
+        {% if user %}
+        <form method="POST" action="{{ url_for('users.edit_profile') }}">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="full_name">Full Name</label>
+                    <input 
+                        type="text" 
+                        name="full_name" 
+                        id="full_name" 
+                        class="form-control" 
+                        value="{{ user[1] }}"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input 
+                        type="email" 
+                        name="email" 
+                        id="email" 
+                        class="form-control" 
+                        value="{{ user[2] }}"
+                        required
+                    >
+                </div>
+            </div>
+
+            <button type="submit" class="btn">Update Profile</button>
+            <a href="{{ url_for('users.profile') }}" class="btn btn-danger">Cancel</a>
+        </form>
+        {% else %}
+            <p>User data not found.</p>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

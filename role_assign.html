@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="admin-container">
+    <div class="dashboard-hero">
+        <div>
+            <span class="dashboard-badge">Role Assignment</span>
+            <h1>Assign User Role</h1>
+            <p>Change user roles and update access permissions.</p>
+        </div>
+
+        <div class="dashboard-hero-actions">
+            <a href="{{ url_for('users.user_list') }}" class="btn">Back to Users</a>
+        </div>
+    </div>
+
+    <div class="admin-card">
+        <form method="POST" action="{{ url_for('users.role_assign') }}">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="user_id">Select User</label>
+                    <select name="user_id" id="user_id" class="form-control" required>
+                        <option value="">Choose User</option>
+                        {% for user in users %}
+                            <option value="{{ user[0] }}">{{ user[1] }} - {{ user[2] }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="role_id">Select Role</label>
+                    <select name="role_id" id="role_id" class="form-control" required>
+                        <option value="">Choose Role</option>
+                        {% for role in roles %}
+                            <option value="{{ role[0] }}">{{ role[1] }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <button type="submit" class="btn">Assign Role</button>
+            <a href="{{ url_for('users.user_list') }}" class="btn btn-danger">Cancel</a>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

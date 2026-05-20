@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="admin-container">
+    <div class="dashboard-hero">
+        <div>
+            <span class="dashboard-badge">My Profile</span>
+            <h1>{{ current_user.full_name }}</h1>
+            <p>View and manage your account information.</p>
+        </div>
+
+        <div class="dashboard-hero-actions">
+            <a href="{{ url_for('users.edit_profile') }}" class="btn">Edit Profile</a>
+            <a href="{{ url_for('dashboard.dashboard') }}" class="btn btn-success">Dashboard</a>
+        </div>
+    </div>
+
+    <div class="admin-card">
+        {% if user %}
+            <div class="details-grid">
+                <div class="detail-box">
+                    <span>User ID</span>
+                    <strong>{{ user[0] }}</strong>
+                </div>
+
+                <div class="detail-box">
+                    <span>Full Name</span>
+                    <strong>{{ user[1] }}</strong>
+                </div>
+
+                <div class="detail-box">
+                    <span>Email</span>
+                    <strong>{{ user[2] }}</strong>
+                </div>
+
+                <div class="detail-box">
+                    <span>Role</span>
+                    <strong>{{ user[4] }}</strong>
+                </div>
+
+                <div class="detail-box">
+                    <span>Company</span>
+                    <strong>{{ user[6] }}</strong>
+                </div>
+
+                <div class="detail-box">
+                    <span>Status</span>
+
+                    {% if user[7] == "active" %}
+                        <strong class="status-text-success">Active</strong>
+                    {% elif user[7] == "blocked" %}
+                        <strong class="status-text-danger">Blocked</strong>
+                    {% else %}
+                        <strong class="status-text-warning">Inactive</strong>
+                    {% endif %}
+                </div>
+
+                <div class="detail-box">
+                    <span>Created At</span>
+                    <strong>{{ user[8] }}</strong>
+                </div>
+            </div>
+        {% else %}
+            <p>Profile data not found.</p>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}
