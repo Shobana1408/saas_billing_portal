@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="admin-container">
+    <h1 class="admin-title">Admin Dashboard</h1>
+
+    <div class="admin-card">
+        <h2>Welcome, Admin</h2>
+        <p>Manage users, companies, roles, plans, logs, and system settings from here.</p>
+    </div>
+
+    <div class="dashboard-cards">
+        <div class="dashboard-card">
+            <h3>Manage Roles</h3>
+            <p>RBAC</p>
+            <br>
+            <a href="{{ url_for('admin.manage_roles') }}" class="btn">Open</a>
+        </div>
+
+        <div class="dashboard-card">
+            <h3>Manage Plans</h3>
+            <p>Plans</p>
+            <br>
+            <a href="{{ url_for('admin.manage_plans') }}" class="btn">Open</a>
+        </div>
+
+        <div class="dashboard-card">
+            <h3>Audit Logs</h3>
+            <p>Logs</p>
+            <br>
+            <a href="{{ url_for('admin.audit_logs') }}" class="btn">Open</a>
+        </div>
+
+        <div class="dashboard-card">
+            <h3>Settings</h3>
+            <p>System</p>
+            <br>
+            <a href="{{ url_for('admin.settings') }}" class="btn">Open</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
