@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="admin-container">
+    <div class="dashboard-hero">
+        <div>
+            <span class="dashboard-badge">Upgrade Plan</span>
+
+            {% if subscription %}
+                <h1>Upgrade Subscription #{{ subscription[0] }}</h1>
+                <p>Current plan: {{ subscription[4] }} for {{ subscription[2] }}</p>
+            {% else %}
+                <h1>Subscription Not Found</h1>
+                <p>The selected subscription could not be found.</p>
+            {% endif %}
+        </div>
+
+        <div class="dashboard-hero-actions">
+            <a href="{{ url_for('subscriptions.subscription_list') }}" class="btn">Back to Subscriptions</a>
+        </div>
+    </div>
+
+    <div class="admin-card">
+        {% if subscription %}
+        <form method="POST" action="{{ url_for('subscriptions.upgrade_plan', subscription_id=subscription[0]) }}">
+            <div class="form-group">
+                <label for="plan_id">Select New Plan</label>
+                <select name="plan_id" id="plan_id" class="form-control" required>
+                    <option value="">Choose Plan</option>
+                    {% for plan in plans %}
+                        <option value="{{ plan[0] }}" {% if plan[0] == subscription[3] %}selected{% endif %}>
+                            {{ plan[1] }} - ₹{{ plan[2] }} / {{ plan[3] }} - {{ plan[4] }} users
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-success">Upgrade Plan</button>
+            <a href="{{ url_for('subscriptions.subscription_details', subscription_id=subscription[0]) }}" class="btn">View Details</a>
+            <a href="{{ url_for('subscriptions.subscription_list') }}" class="btn btn-danger">Cancel</a>
+        </form>
+        {% else %}
+            <p>Subscription not found.</p>
+            <br>
+            <a href="{{ url_for('subscriptions.subscription_list') }}" class="btn">Back to Subscriptions</a>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

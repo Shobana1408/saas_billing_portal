@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="admin-container">
+    <div class="dashboard-hero">
+        <div>
+            <span class="dashboard-badge">Create Subscription</span>
+            <h1>New Subscription</h1>
+            <p>Assign a subscription plan to a company and define billing dates.</p>
+        </div>
+
+        <div class="dashboard-hero-actions">
+            <a href="{{ url_for('subscriptions.subscription_list') }}" class="btn">Back to Subscriptions</a>
+        </div>
+    </div>
+
+    <div class="admin-card">
+        <form method="POST" action="{{ url_for('subscriptions.subscription_create') }}">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="company_id">Company</label>
+                    <select name="company_id" id="company_id" class="form-control" required>
+                        <option value="">Select Company</option>
+                        {% for company in companies %}
+                            <option value="{{ company[0] }}">{{ company[1] }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="plan_id">Plan</label>
+                    <select name="plan_id" id="plan_id" class="form-control" required>
+                        <option value="">Select Plan</option>
+                        {% for plan in plans %}
+                            <option value="{{ plan[0] }}">
+                                {{ plan[1] }} - ₹{{ plan[2] }} / {{ plan[3] }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="start_date">Start Date</label>
+                    <input 
+                        type="date" 
+                        name="start_date" 
+                        id="start_date" 
+                        class="form-control" 
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="end_date">End Date</label>
+                    <input 
+                        type="date" 
+                        name="end_date" 
+                        id="end_date" 
+                        class="form-control" 
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="status">Status</label>
+                    <select name="status" id="status" class="form-control" required>
+                        <option value="active">Active</option>
+                        <option value="expired">Expired</option>
+                        <option value="cancelled">Cancelled</option>
+                    </select>
+                </div>
+
+                <div class="form-group checkbox-box">
+                    <label>
+                        <input type="checkbox" name="auto_renew" checked>
+                        Auto Renew Subscription
+                    </label>
+                </div>
+            </div>
+
+            <button type="submit" class="btn">Create Subscription</button>
+            <a href="{{ url_for('subscriptions.subscription_list') }}" class="btn btn-danger">Cancel</a>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

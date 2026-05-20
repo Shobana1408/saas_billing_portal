@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="admin-container">
+    <div class="dashboard-hero">
+        <div>
+            <span class="dashboard-badge">Subscription Details</span>
+
+            {% if subscription %}
+                <h1>Subscription #{{ subscription[0] }}</h1>
+                <p>{{ subscription[2] }} is currently using the {{ subscription[4] }} plan.</p>
+            {% else %}
+                <h1>Subscription Not Found</h1>
+                <p>The selected subscription could not be found.</p>
+            {% endif %}
+        </div>
+
+        <div class="dashboard-hero-actions">
+            {% if subscription %}
+                <a href="{{ url_for('subscriptions.subscription_edit', subscription_id=subscription[0]) }}" class="btn">Edit</a>
+                <a href="{{ url_for('subscriptions.upgrade_plan', subscription_id=subscription[0]) }}" class="btn btn-success">Upgrade</a>
+            {% endif %}
+
+            <a href="{{ url_for('subscriptions.subscription_list') }}" class="btn">Back</a>
+        </div>
+    </div>
+
+    {% if subscription %}
+        <div class="dashboard-cards">
+            <div class="dashboard-card metric-card blue-card">
+                <div class="metric-icon">🏢</div>
+                <h3>Company</h3>
+                <p>{{ subscription[2] }}</p>
+                <span>Company subscription holder</span>
+            </div>
+
+            <div class="dashboard-card metric-card green-card">
+                <div class="metric-icon">📦</div>
+                <h3>Plan</h3>
+                <p>{{ subscription[4] }}</p>
+                <span>₹{{ subscription[5] }} / {{ subscription[6] }}</span>
+            </div>
+
+            <div class="dashboard-card metric-card purple-card">
+                <div class="metric-icon">👥</div>
+                <h3>Max Users</h3>
+                <p>{{ subscription[7] }}</p>
+                <span>Allowed users in this plan</span>
+            </div>
+
+            <div class="dashboard-card metric-card orange-card">
+                <div class="metric-icon">🔁</div>
+                <h3>Auto Renew</h3>
+                <p>
+                    {% if subscription[11] %}
+                        Yes
+                    {% else %}
+                        No
+                    {% endif %}
+                </p>
+                <span>Renewal preference</span>
+            </div>
+        </div>
+
+        <div class="admin-card">
+            <div class="details-grid">
+                <div class="detail-box">
+                    <span>Subscription ID</span>
+                    <strong>{{ subscription[0] }}</strong>
+                </div>
+
+                <div class="detail-box">
+                    <span>Company</span>
+                    <strong>{{ subscription[2] }}</strong>
+                </div>
+
+                <div class="detail-box">
+                    <span>Plan</span>
+                    <strong>{{ subscription[4] }}</strong>
+                </div>
+
+                <div class="detail-box">
+                    <span>Price</span>
+                    <strong>₹{{ subscription[5] }}</strong>
+                </div>
+
+                <div class="detail-box">
+                    <span>Billing Cycle</span>
+                    <strong>{{ subscription[6] }}</strong>
+                </div>
+
+                <div class="detail-box">
+                    <span>Start Date</span>
+                    <strong>{{ subscription[8] }}</strong>
+                </div>
+
+                <div class="detail-box">
+                    <span>End Date</span>
+                    <strong>{{ subscription[9] }}</strong>
+                </div>
+
+                <div class="detail-box">
+                    <span>Status</span>
+
+                    {% if subscription[10] == "active" %}
+                        <strong class="status-text-success">Active</strong>
+                    {% elif subscription[10] == "cancelled" %}
+                        <strong class="status-text-danger">Cancelled</strong>
+                    {% else %}
+                        <strong class="status-text-warning">Expired</strong>
+                    {% endif %}
+                </div>
+
+                <div class="detail-box">
+                    <span>Created At</span>
+                    <strong>{{ subscription[12] }}</strong>
+                </div>
+            </div>
+
+            <br>
+
+            <a href="{{ url_for('subscriptions.subscription_edit', subscription_id=subscription[0]) }}" class="btn">Edit Subscription</a>
+            <a href="{{ url_for('subscriptions.upgrade_plan', subscription_id=subscription[0]) }}" class="btn btn-success">Upgrade Plan</a>
+
+            {% if subscription[10] == "cancelled" %}
+                <a 
+                    href="{{ url_for('subscriptions.subscription_activate', subscription_id=subscription[0]) }}" 
+                    class="btn btn-success"
+                    onclick="return confirm('Activate this subscription?')"
+                >
+                    Activate
+                </a>
+            {% else %}
+                <a 
+                    href="{{ url_for('subscriptions.subscription_cancel', subscription_id=subscription[0]) }}" 
+                    class="btn btn-danger"
+                    onclick="return confirm('Cancel this subscription?')"
+                >
+                    Cancel Subscription
+                </a>
+            {% endif %}
+        </div>
+    {% else %}
+        <div class="admin-card">
+            <p>Subscription not found.</p>
+            <br>
+            <a href="{{ url_for('subscriptions.subscription_list') }}" class="btn">Back to Subscriptions</a>
+        </div>
+    {% endif %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="admin-container">
+    <div class="dashboard-hero">
+        <div>
+            <span class="dashboard-badge">Edit Subscription</span>
+
+            {% if subscription %}
+                <h1>Subscription #{{ subscription[0] }}</h1>
+                <p>Update plan, billing dates, status, and renewal settings.</p>
+            {% else %}
+                <h1>Subscription Not Found</h1>
+                <p>The selected subscription could not be found.</p>
+            {% endif %}
+        </div>
+
+        <div class="dashboard-hero-actions">
+            <a href="{{ url_for('subscriptions.subscription_list') }}" class="btn">Back to Subscriptions</a>
+        </div>
+    </div>
+
+    <div class="admin-card">
+        {% if subscription %}
+        <form method="POST" action="{{ url_for('subscriptions.subscription_edit', subscription_id=subscription[0]) }}">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="plan_id">Plan</label>
+                    <select name="plan_id" id="plan_id" class="form-control" required>
+                        {% for plan in plans %}
+                            <option value="{{ plan[0] }}" {% if plan[0] == subscription[3] %}selected{% endif %}>
+                                {{ plan[1] }} - ₹{{ plan[2] }} / {{ plan[3] }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="start_date">Start Date</label>
+                    <input 
+                        type="date" 
+                        name="start_date" 
+                        id="start_date" 
+                        class="form-control" 
+                        value="{{ subscription[8] }}"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="end_date">End Date</label>
+                    <input 
+                        type="date" 
+                        name="end_date" 
+                        id="end_date" 
+                        class="form-control" 
+                        value="{{ subscription[9] }}"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="status">Status</label>
+                    <select name="status" id="status" class="form-control" required>
+                        <option value="active" {% if subscription[10] == "active" %}selected{% endif %}>Active</option>
+                        <option value="expired" {% if subscription[10] == "expired" %}selected{% endif %}>Expired</option>
+                        <option value="cancelled" {% if subscription[10] == "cancelled" %}selected{% endif %}>Cancelled</option>
+                    </select>
+                </div>
+
+                <div class="form-group checkbox-box">
+                    <label>
+                        <input 
+                            type="checkbox" 
+                            name="auto_renew" 
+                            {% if subscription[11] %}checked{% endif %}
+                        >
+                        Auto Renew Subscription
+                    </label>
+                </div>
+            </div>
+
+            <button type="submit" class="btn">Update Subscription</button>
+            <a href="{{ url_for('subscriptions.subscription_details', subscription_id=subscription[0]) }}" class="btn btn-success">View Details</a>
+            <a href="{{ url_for('subscriptions.subscription_list') }}" class="btn btn-danger">Cancel</a>
+        </form>
+        {% else %}
+            <p>Subscription not found.</p>
+            <br>
+            <a href="{{ url_for('subscriptions.subscription_list') }}" class="btn">Back to Subscriptions</a>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}
