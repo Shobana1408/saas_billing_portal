@@ -1,0 +1,11 @@
+company_name,total_users,cancelled_users,churn_rate,subscription_plan,monthly_revenue
+TechNova,120,5,4.1,Pro,12000
+CloudSync,85,10,11.7,Basic,7000
+DataHive,200,3,1.5,Enterprise,30000
+ByteWave,150,8,5.3,Pro,15000
+InnoSoft,60,12,20.0,Basic,5000
+CodeSphere,250,4,1.6,Enterprise,40000
+NextGen,110,6,5.4,Pro,13000
+VisionTech,95,9,9.4,Basic,8000
+AlphaCore,180,2,1.1,Enterprise,32000
+SmartEdge,140,7,5.0,Pro,14500

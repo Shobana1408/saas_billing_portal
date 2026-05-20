@@ -1,0 +1,11 @@
+billing_id,company_name,month,total_users,subscription_plan,monthly_cost,payments_successful,payments_failed
+1,TechNova,January,120,Pro,12000,118,2
+2,CloudSync,January,85,Basic,7000,82,3
+3,DataHive,January,200,Enterprise,30000,198,2
+4,ByteWave,February,150,Pro,15000,145,5
+5,InnoSoft,February,60,Basic,5000,58,2
+6,CodeSphere,March,250,Enterprise,40000,247,3
+7,NextGen,March,110,Pro,13000,107,3
+8,VisionTech,April,95,Basic,8000,92,3
+9,AlphaCore,April,180,Enterprise,32000,176,4
+10,SmartEdge,May,140,Pro,14500,137,3
