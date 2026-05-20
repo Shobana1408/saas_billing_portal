@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="hero-section">
+    <div class="hero-text">
+        <span class="hero-badge">AI-Powered SaaS Billing Platform</span>
+
+        <h1>Smart Billing, Subscriptions and Revenue Analytics in One Portal</h1>
+
+        <p>
+            Manage companies, users, subscription plans, invoices, payments, and AI-powered
+            billing insights from one secure role-based dashboard.
+        </p>
+
+        <div class="hero-actions">
+            {% if current_user.is_authenticated %}
+                <a href="{{ url_for('dashboard.dashboard') }}" class="btn">Go to Dashboard</a>
+            {% else %}
+                <a href="{{ url_for('auth.register') }}" class="btn">Get Started</a>
+                <a href="{{ url_for('auth.login') }}" class="btn btn-success">Login</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="hero-image-box">
+        <img 
+            src="{{ url_for('static', filename='images/hero-billing.png') }}" 
+            alt="SaaS Billing Dashboard" 
+            class="hero-image"
+        >
+    </div>
+</section>
+
+<section class="feature-section">
+    <div class="feature-card">
+        <div class="feature-icon">🔐</div>
+        <h3>Role-Based Access</h3>
+        <p>Separate dashboards for Super Admin, Company Admin, Finance Manager, and User.</p>
+    </div>
+
+    <div class="feature-card">
+        <div class="feature-icon">🧾</div>
+        <h3>Invoice & Payments</h3>
+        <p>Create invoices, track payments, and manage billing history with clean workflows.</p>
+    </div>
+
+    <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <h3>AI Analytics</h3>
+        <p>Forecast revenue, detect churn risk, and generate useful spending insights.</p>
+    </div>
+</section>
+
+<section class="preview-section">
+    <div class="preview-text">
+        <span class="hero-badge">Dashboard Preview</span>
+        <h2>Professional Dashboard Experience</h2>
+        <p>
+            A modern dashboard layout designed for SaaS businesses to track revenue,
+            subscriptions, invoices, payments, and AI insights clearly.
+        </p>
+    </div>
+
+    <img 
+        src="{{ url_for('static', filename='images/dashboard-preview.png') }}" 
+        alt="Dashboard Preview" 
+        class="dashboard-preview-image"
+    >
+</section>
+
+{% endblock %}

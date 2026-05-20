@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SaaS Billing Portal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/billing.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/invoices.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/analytics.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/finance.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
+</head>
+
+<body>
+
+{% if current_user.is_authenticated %}
+
+    <aside class="sidebar">
+        <div class="sidebar-brand">
+            <img 
+                src="{{ url_for('static', filename='images/logo.png') }}" 
+                alt="SaaS Billing Portal Logo" 
+                class="app-logo sidebar-logo"
+            >
+        </div>
+
+        <nav class="sidebar-menu">
+
+            <!-- Common for all logged-in users -->
+            <a href="{{ url_for('dashboard.dashboard') }}">Dashboard</a>
+
+            <!-- Super Admin -->
+            {% if current_user.role_id == 1 %}
+                <a href="{{ url_for('users.user_list') }}">Users</a>
+                <a href="{{ url_for('companies.company_list') }}">Companies</a>
+                <a href="{{ url_for('admin.manage_roles') }}">Roles</a>
+                <a href="{{ url_for('subscriptions.plans') }}">Plans</a>
+                <a href="{{ url_for('subscriptions.subscription_list') }}">Subscriptions</a>
+                <a href="{{ url_for('invoices.invoice_list') }}">Invoices</a>
+                <a href="{{ url_for('billing.payment_history') }}">Payments</a>
+                <a href="{{ url_for('analytics.analytics_home') }}">Analytics</a>
+                <a href="{{ url_for('finance.finance_home') }}">Finance</a>
+                <a href="{{ url_for('admin.audit_logs') }}">Audit Logs</a>
+                <a href="{{ url_for('admin.settings') }}">Settings</a>
+            {% endif %}
+
+            <!-- Company Admin -->
+            {% if current_user.role_id == 2 %}
+                <a href="{{ url_for('users.user_list') }}">Employees</a>
+                <a href="{{ url_for('subscriptions.plans') }}">Plans</a>
+                <a href="{{ url_for('subscriptions.subscription_list') }}">Subscriptions</a>
+                <a href="{{ url_for('invoices.invoice_list') }}">Invoices</a>
+                <a href="{{ url_for('billing.payment_history') }}">Payments</a>
+                <a href="{{ url_for('analytics.analytics_home') }}">Analytics</a>
+            {% endif %}
+
+            <!-- Finance Manager -->
+            {% if current_user.role_id == 3 %}
+                <a href="{{ url_for('invoices.invoice_list') }}">Invoices</a>
+                <a href="{{ url_for('invoices.invoice_create') }}">Create Invoice</a>
+                <a href="{{ url_for('billing.payment_history') }}">Payments</a>
+                <a href="{{ url_for('billing.payment_create') }}">Create Payment</a>
+                <a href="{{ url_for('analytics.analytics_home') }}">Analytics</a>
+                <a href="{{ url_for('finance.finance_home') }}">Finance</a>
+                <a href="{{ url_for('finance.revenue_tracking') }}">Revenue</a>
+                <a href="{{ url_for('finance.tax_reports') }}">Tax Reports</a>
+            {% endif %}
+
+            <!-- Regular User -->
+            {% if current_user.role_id == 4 %}
+                <a href="{{ url_for('users.profile') }}">My Profile</a>
+                <a href="{{ url_for('notifications.notification_list') }}">Notifications</a>
+            {% endif %}
+
+            <!-- Common bottom links -->
+            <a href="{{ url_for('notifications.notification_list') }}">Notifications</a>
+            <a href="{{ url_for('users.profile') }}">Profile</a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <p>Logged in as</p>
+            <strong>{{ current_user.full_name }}</strong>
+
+            {% if current_user.role_id == 1 %}
+                <span class="role-chip">Super Admin</span>
+            {% elif current_user.role_id == 2 %}
+                <span class="role-chip">Company Admin</span>
+            {% elif current_user.role_id == 3 %}
+                <span class="role-chip">Finance Manager</span>
+            {% else %}
+                <span class="role-chip">User</span>
+            {% endif %}
+
+            <a href="{{ url_for('auth.logout') }}" class="logout-link">Logout</a>
+        </div>
+    </aside>
+
+    <main class="app-main">
+        <header class="topbar">
+            <div>
+                <h1>AI-Powered SaaS Billing Portal</h1>
+                <p>Manage subscriptions, invoices, payments and analytics</p>
+            </div>
+
+            <div class="topbar-actions">
+                <a href="{{ url_for('notifications.notification_list') }}" class="topbar-btn">Notifications</a>
+                <a href="{{ url_for('users.profile') }}" class="profile-chip">
+                    {{ current_user.full_name[0] }}
+                </a>
+            </div>
+        </header>
+
+        <section class="page-content">
+
+{% else %}
+
+    <nav class="public-navbar">
+        <div class="public-brand">
+            <img 
+                src="{{ url_for('static', filename='images/logo.png') }}" 
+                alt="SaaS Billing Portal Logo" 
+                class="app-logo public-logo"
+            >
+        </div>
+
+        <div class="public-links">
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="{{ url_for('auth.login') }}">Login</a>
+            <a href="{{ url_for('auth.register') }}" class="nav-register">Register</a>
+        </div>
+    </nav>
+
+    <main class="public-main">
+
+{% endif %}
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="flash-wrapper">
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            {% block content %}{% endblock %}
+
+{% if current_user.is_authenticated %}
+        </section>
+    </main>
+{% else %}
+    </main>
+{% endif %}
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+{% block scripts %}{% endblock %}
+
+</body>
+</html>
