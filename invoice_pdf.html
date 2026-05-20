@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="invoice-container">
+    <h1 class="invoice-title">Invoice PDF View</h1>
+
+    <div class="invoice-card" id="invoicePrintArea">
+        {% if invoice %}
+            <div class="invoice-header">
+                <div>
+                    <h2>SaaS Billing Portal</h2>
+                    <p>AI-Powered Billing & Analytics Platform</p>
+                </div>
+
+                <div>
+                    <h2>INVOICE</h2>
+                    <p>{{ invoice[3] }}</p>
+                </div>
+            </div>
+
+            <hr>
+            <br>
+
+            <table class="invoice-table">
+                <tr>
+                    <th>Description</th>
+                    <th>Value</th>
+                </tr>
+
+                <tr>
+                    <td>Invoice Number</td>
+                    <td>{{ invoice[3] }}</td>
+                </tr>
+
+                <tr>
+                    <td>Company ID</td>
+                    <td>{{ invoice[1] }}</td>
+                </tr>
+
+                <tr>
+                    <td>Subscription ID</td>
+                    <td>{{ invoice[2] }}</td>
+                </tr>
+
+                <tr>
+                    <td>Due Date</td>
+                    <td>{{ invoice[7] }}</td>
+                </tr>
+
+                <tr>
+                    <td>Status</td>
+                    <td>{{ invoice[8] }}</td>
+                </tr>
+            </table>
+
+            <div class="invoice-total">
+                <p>Amount: ₹{{ invoice[4] }}</p>
+                <p>Tax: ₹{{ invoice[5] }}</p>
+                <p>Total Amount: ₹{{ invoice[6] }}</p>
+            </div>
+
+            <br>
+
+            <p>
+                Thank you for using SaaS Billing Portal.
+            </p>
+        {% else %}
+            <p>Invoice not found.</p>
+        {% endif %}
+    </div>
+
+    <br>
+
+    <button onclick="printInvoice()" class="btn">Print / Save as PDF</button>
+    <a href="{{ url_for('invoices.invoice_list') }}" class="btn btn-danger">Back</a>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/invoices.js') }}"></script>
+{% endblock %}

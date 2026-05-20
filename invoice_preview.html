@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="invoice-container">
+    <h1 class="invoice-title">Invoice Preview</h1>
+
+    <div class="invoice-card">
+        {% if invoice %}
+            <div class="invoice-header">
+                <div>
+                    <h2>SaaS Billing Portal</h2>
+                    <p>Official Invoice Preview</p>
+                </div>
+
+                <div>
+                    <h2>{{ invoice[3] }}</h2>
+                    <p>Status: {{ invoice[8] }}</p>
+                </div>
+            </div>
+
+            <table class="invoice-table">
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>Company ID</td>
+                        <td>{{ invoice[1] }}</td>
+                    </tr>
+
+                    <tr>
+                        <td>Subscription ID</td>
+                        <td>{{ invoice[2] }}</td>
+                    </tr>
+
+                    <tr>
+                        <td>Amount</td>
+                        <td>₹{{ invoice[4] }}</td>
+                    </tr>
+
+                    <tr>
+                        <td>Tax</td>
+                        <td>₹{{ invoice[5] }}</td>
+                    </tr>
+
+                    <tr>
+                        <td>Total Amount</td>
+                        <td>₹{{ invoice[6] }}</td>
+                    </tr>
+
+                    <tr>
+                        <td>Due Date</td>
+                        <td>{{ invoice[7] }}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="invoice-total">
+                Final Payable Amount: ₹{{ invoice[6] }}
+            </div>
+
+            <br>
+
+            <a href="{{ url_for('invoices.invoice_pdf', invoice_id=invoice[0]) }}" class="btn">PDF View</a>
+            <a href="{{ url_for('invoices.invoice_details', invoice_id=invoice[0]) }}" class="btn btn-success">Details</a>
+            <a href="{{ url_for('invoices.invoice_list') }}" class="btn btn-danger">Back</a>
+        {% else %}
+            <p>Invoice not found.</p>
+            <br>
+            <a href="{{ url_for('invoices.invoice_list') }}" class="btn">Back to Invoices</a>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

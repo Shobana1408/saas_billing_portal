@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="invoice-container">
+    <div class="dashboard-hero">
+        <div>
+            <span class="dashboard-badge">Invoice Management</span>
+            <h1>Invoices</h1>
+            <p>Create, view, update, preview, and manage billing invoices dynamically.</p>
+        </div>
+
+        <div class="dashboard-hero-actions">
+            {% if current_user.role_id in [1, 3] %}
+                <a href="{{ url_for('invoices.invoice_create') }}" class="btn">Create Invoice</a>
+            {% endif %}
+
+            <a href="{{ url_for('billing.payment_history') }}" class="btn btn-success">Payments</a>
+        </div>
+    </div>
+
+    <div class="dashboard-cards">
+        <div class="dashboard-card metric-card blue-card">
+            <div class="metric-icon">🧾</div>
+            <h3>Total Invoices</h3>
+            <p>{{ summary.total }}</p>
+            <span>All generated invoices</span>
+        </div>
+
+        <div class="dashboard-card metric-card green-card">
+            <div class="metric-icon">✅</div>
+            <h3>Paid</h3>
+            <p>{{ summary.paid }}</p>
+            <span>Completed invoices</span>
+        </div>
+
+        <div class="dashboard-card metric-card orange-card">
+            <div class="metric-icon">⏳</div>
+            <h3>Unpaid</h3>
+            <p>{{ summary.unpaid }}</p>
+            <span>Pending payment</span>
+        </div>
+
+        <div class="dashboard-card metric-card purple-card">
+            <div class="metric-icon">₹</div>
+            <h3>Total Value</h3>
+            <p>₹{{ summary.value }}</p>
+            <span>Total invoice amount</span>
+        </div>
+    </div>
+
+    <div class="invoice-card">
+        <table class="invoice-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Invoice Number</th>
+                    <th>Company</th>
+                    <th>Amount</th>
+                    <th>Tax</th>
+                    <th>Total</th>
+                    <th>Due Date</th>
+                    <th>Status</th>
+                    <th>Created At</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for invoice in invoices %}
+                <tr>
+                    <td>{{ invoice[0] }}</td>
+                    <td><strong>{{ invoice[1] }}</strong></td>
+                    <td>{{ invoice[2] }}</td>
+                    <td>₹{{ invoice[3] }}</td>
+                    <td>₹{{ invoice[4] }}</td>
+                    <td>₹{{ invoice[5] }}</td>
+                    <td>{{ invoice[6] }}</td>
+
+                    <td>
+                        {% if invoice[7] == "paid" %}
+                            <span class="status-pill success">Paid</span>
+                        {% elif invoice[7] == "overdue" %}
+                            <span class="status-pill danger">Overdue</span>
+                        {% else %}
+                            <span class="status-pill warning">Unpaid</span>
+                        {% endif %}
+                    </td>
+
+                    <td>{{ invoice[8] }}</td>
+
+                    <td>
+                        <a href="{{ url_for('invoices.invoice_details', invoice_id=invoice[0]) }}" class="btn">View</a>
+                        <a href="{{ url_for('invoices.invoice_preview', invoice_id=invoice[0]) }}" class="btn btn-success">Preview</a>
+
+                        {% if current_user.role_id in [1, 3] %}
+                            <a 
+                                href="{{ url_for('invoices.invoice_delete', invoice_id=invoice[0]) }}" 
+                                class="btn btn-danger"
+                                onclick="return confirmInvoiceDelete()"
+                            >
+                                Delete
+                            </a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="10">No invoices found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/invoices.js') }}"></script>
+{% endblock %}
