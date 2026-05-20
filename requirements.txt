@@ -1,0 +1,15 @@
+Flask
+Flask-MySQLdb
+Flask-Login
+Flask-Mail
+Flask-WTF
+python-dotenv
+email-validator
+Werkzeug
+mysqlclient
+pandas
+numpy
+scikit-learn
+matplotlib
+reportlab
+joblib
