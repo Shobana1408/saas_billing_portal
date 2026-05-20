@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="dashboard-container">
+    <div class="dashboard-hero">
+        <div>
+            <span class="dashboard-badge">Super Admin</span>
+            <h1>Command Center</h1>
+            <p>Monitor companies, users, subscriptions, revenue, payments, and platform health.</p>
+        </div>
+
+        <div class="dashboard-hero-actions">
+            <a href="{{ url_for('companies.company_create') }}" class="btn">Add Company</a>
+            <a href="{{ url_for('users.create_user') }}" class="btn btn-success">Add User</a>
+        </div>
+    </div>
+
+    <div class="dashboard-cards" id="dashboardSummary">
+        <div class="dashboard-card metric-card blue-card">
+            <div class="metric-icon">₹</div>
+            <h3>Total Revenue</h3>
+            <p id="totalRevenue">₹{{ data.total_revenue }}</p>
+            <span>Successful payments</span>
+        </div>
+
+        <div class="dashboard-card metric-card green-card">
+            <div class="metric-icon">👥</div>
+            <h3>Total Users</h3>
+            <p id="totalUsers">{{ data.total_users }}</p>
+            <span>Registered accounts</span>
+        </div>
+
+        <div class="dashboard-card metric-card purple-card">
+            <div class="metric-icon">🏢</div>
+            <h3>Total Companies</h3>
+            <p id="totalCompanies">{{ data.total_companies }}</p>
+            <span>Active organizations</span>
+        </div>
+
+        <div class="dashboard-card metric-card orange-card">
+            <div class="metric-icon">📦</div>
+            <h3>Active Subscriptions</h3>
+            <p id="activeSubscriptions">{{ data.active_subscriptions }}</p>
+            <span>Running plans</span>
+        </div>
+    </div>
+
+    <div class="dashboard-grid">
+        <div class="dashboard-section">
+            <div class="section-header">
+                <h2>Quick Actions</h2>
+                <p>Frequently used admin controls</p>
+            </div>
+
+            <div class="quick-actions">
+                <a href="{{ url_for('users.user_list') }}">Manage Users</a>
+                <a href="{{ url_for('companies.company_list') }}">Manage Companies</a>
+                <a href="{{ url_for('admin.manage_roles') }}">Manage Roles</a>
+                <a href="{{ url_for('admin.manage_plans') }}">Manage Plans</a>
+                <a href="{{ url_for('subscriptions.subscription_list') }}">Subscriptions</a>
+                <a href="{{ url_for('analytics.analytics_home') }}">Analytics</a>
+            </div>
+        </div>
+
+        <div class="dashboard-section ai-panel">
+            <div class="section-header">
+                <h2>AI Platform Insight</h2>
+                <p>System-level billing intelligence</p>
+            </div>
+
+            <div class="ai-card">
+                <h3>Revenue Status</h3>
+                <p>
+                    Your platform has generated <strong>₹{{ data.total_revenue }}</strong> from successful payments.
+                    Keep tracking failed payments and subscription growth regularly.
+                </p>
+                <a href="{{ url_for('analytics.ai_insights') }}" class="btn btn-success">View AI Insights</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="dashboard-section">
+        <div class="section-header">
+            <h2>System Health</h2>
+            <p>Current status of important modules</p>
+        </div>
+
+        <table class="dashboard-table">
+            <thead>
+                <tr>
+                    <th>Module</th>
+                    <th>Status</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>Database</td>
+                    <td><span class="status-pill success">Connected</span></td>
+                    <td>MySQL connection is active</td>
+                </tr>
+
+                <tr>
+                    <td>AI Analytics</td>
+                    <td><span class="status-pill success">Active</span></td>
+                    <td>Revenue forecast and insights available</td>
+                </tr>
+
+                <tr>
+                    <td>Failed Payments</td>
+                    <td><span class="status-pill warning">{{ data.failed_payments }}</span></td>
+                    <td>Needs review by finance team</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}

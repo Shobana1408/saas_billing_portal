@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="dashboard-container">
+    <div class="dashboard-hero">
+        <div>
+            <span class="dashboard-badge">Company Admin</span>
+            <h1>Company Billing Workspace</h1>
+            <p>Manage your company users, plans, subscriptions, invoices, and billing analytics.</p>
+        </div>
+
+        <div class="dashboard-hero-actions">
+            <a href="{{ url_for('users.create_user') }}" class="btn">Add Employee</a>
+            <a href="{{ url_for('subscriptions.subscription_list') }}" class="btn btn-success">View Subscription</a>
+        </div>
+    </div>
+
+    <div class="dashboard-cards" id="dashboardSummary">
+        <div class="dashboard-card metric-card blue-card">
+            <div class="metric-icon">₹</div>
+            <h3>Total Revenue</h3>
+            <p id="totalRevenue">₹{{ data.total_revenue }}</p>
+            <span>Company billing overview</span>
+        </div>
+
+        <div class="dashboard-card metric-card green-card">
+            <div class="metric-icon">👥</div>
+            <h3>Total Users</h3>
+            <p id="totalUsers">{{ data.total_users }}</p>
+            <span>Team members</span>
+        </div>
+
+        <div class="dashboard-card metric-card purple-card">
+            <div class="metric-icon">📦</div>
+            <h3>Active Subscriptions</h3>
+            <p id="activeSubscriptions">{{ data.active_subscriptions }}</p>
+            <span>Current active plans</span>
+        </div>
+
+        <div class="dashboard-card metric-card orange-card">
+            <div class="metric-icon">⚠️</div>
+            <h3>Failed Payments</h3>
+            <p id="failedPayments">{{ data.failed_payments }}</p>
+            <span>Payments needing attention</span>
+        </div>
+    </div>
+
+    <div class="dashboard-grid">
+        <div class="dashboard-section">
+            <div class="section-header">
+                <h2>Company Actions</h2>
+                <p>Manage company billing operations</p>
+            </div>
+
+            <div class="quick-actions">
+                <a href="{{ url_for('users.user_list') }}">Manage Employees</a>
+                <a href="{{ url_for('subscriptions.subscription_list') }}">Subscriptions</a>
+                <a href="{{ url_for('subscriptions.plans') }}">View Plans</a>
+                <a href="{{ url_for('invoices.invoice_list') }}">Invoices</a>
+                <a href="{{ url_for('billing.payment_history') }}">Payments</a>
+                <a href="{{ url_for('analytics.analytics_home') }}">Analytics</a>
+            </div>
+        </div>
+
+        <div class="dashboard-section ai-panel">
+            <div class="section-header">
+                <h2>Subscription Insight</h2>
+                <p>Smart billing recommendation</p>
+            </div>
+
+            <div class="ai-card">
+                <h3>Upgrade Opportunity</h3>
+                <p>
+                    Review your current subscription plan and compare it with higher plans
+                    to unlock more users, analytics, and advanced reporting.
+                </p>
+                <a href="{{ url_for('subscriptions.plans') }}" class="btn btn-success">Compare Plans</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}

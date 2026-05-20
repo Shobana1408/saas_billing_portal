@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="dashboard-container">
+    <div class="dashboard-hero">
+        <div>
+            <span class="dashboard-badge">User</span>
+            <h1>My Workspace</h1>
+            <p>View your profile, notifications, account status, and basic platform information.</p>
+        </div>
+
+        <div class="dashboard-hero-actions">
+            <a href="{{ url_for('users.profile') }}" class="btn">My Profile</a>
+            <a href="{{ url_for('notifications.notification_list') }}" class="btn btn-success">Notifications</a>
+        </div>
+    </div>
+
+    <div class="dashboard-cards">
+        <div class="dashboard-card metric-card blue-card">
+            <div class="metric-icon">✅</div>
+            <h3>Account Status</h3>
+            <p>Active</p>
+            <span>Your account is active</span>
+        </div>
+
+        <div class="dashboard-card metric-card green-card">
+            <div class="metric-icon">🔔</div>
+            <h3>Notifications</h3>
+            <p>View</p>
+            <span>Check latest alerts</span>
+        </div>
+
+        <div class="dashboard-card metric-card purple-card">
+            <div class="metric-icon">👤</div>
+            <h3>Profile</h3>
+            <p>Update</p>
+            <span>Manage account details</span>
+        </div>
+
+        <div class="dashboard-card metric-card orange-card">
+            <div class="metric-icon">🛟</div>
+            <h3>Support</h3>
+            <p>Help</p>
+            <span>Contact admin if needed</span>
+        </div>
+    </div>
+
+    <div class="dashboard-grid">
+        <div class="dashboard-section">
+            <div class="section-header">
+                <h2>User Actions</h2>
+                <p>Basic access options</p>
+            </div>
+
+            <div class="quick-actions">
+                <a href="{{ url_for('users.profile') }}">View Profile</a>
+                <a href="{{ url_for('users.edit_profile') }}">Edit Profile</a>
+                <a href="{{ url_for('notifications.notification_list') }}">Notifications</a>
+            </div>
+        </div>
+
+        <div class="dashboard-section ai-panel">
+            <div class="section-header">
+                <h2>Account Summary</h2>
+                <p>Current user information</p>
+            </div>
+
+            <div class="ai-card">
+                <h3>{{ current_user.full_name }}</h3>
+                <p>
+                    Email: <strong>{{ current_user.email }}</strong><br>
+                    Status: <strong>{{ current_user.status }}</strong>
+                </p>
+                <a href="{{ url_for('users.edit_profile') }}" class="btn btn-success">Update Profile</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

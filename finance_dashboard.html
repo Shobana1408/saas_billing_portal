@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="dashboard-container">
+    <div class="dashboard-hero">
+        <div>
+            <span class="dashboard-badge">Finance Manager</span>
+            <h1>Finance Control Panel</h1>
+            <p>Track invoices, payments, revenue, failed transactions, and AI-powered financial insights.</p>
+        </div>
+
+        <div class="dashboard-hero-actions">
+            <a href="{{ url_for('invoices.invoice_create') }}" class="btn">Create Invoice</a>
+            <a href="{{ url_for('billing.payment_create') }}" class="btn btn-success">Record Payment</a>
+        </div>
+    </div>
+
+    <div class="dashboard-cards" id="dashboardSummary">
+        <div class="dashboard-card metric-card blue-card">
+            <div class="metric-icon">₹</div>
+            <h3>Total Revenue</h3>
+            <p id="totalRevenue">₹{{ data.total_revenue }}</p>
+            <span>Successful payments</span>
+        </div>
+
+        <div class="dashboard-card metric-card green-card">
+            <div class="metric-icon">📦</div>
+            <h3>Active Subscriptions</h3>
+            <p id="activeSubscriptions">{{ data.active_subscriptions }}</p>
+            <span>Revenue sources</span>
+        </div>
+
+        <div class="dashboard-card metric-card orange-card">
+            <div class="metric-icon">⚠️</div>
+            <h3>Failed Payments</h3>
+            <p id="failedPayments">{{ data.failed_payments }}</p>
+            <span>Needs follow-up</span>
+        </div>
+
+        <div class="dashboard-card metric-card purple-card">
+            <div class="metric-icon">🏢</div>
+            <h3>Total Companies</h3>
+            <p id="totalCompanies">{{ data.total_companies }}</p>
+            <span>Billing clients</span>
+        </div>
+    </div>
+
+    <div class="dashboard-grid">
+        <div class="dashboard-section">
+            <div class="section-header">
+                <h2>Finance Actions</h2>
+                <p>Billing and payment workflows</p>
+            </div>
+
+            <div class="quick-actions">
+                <a href="{{ url_for('invoices.invoice_list') }}">View Invoices</a>
+                <a href="{{ url_for('invoices.invoice_create') }}">Create Invoice</a>
+                <a href="{{ url_for('billing.payment_history') }}">Payment History</a>
+                <a href="{{ url_for('billing.payment_create') }}">Create Payment</a>
+                <a href="{{ url_for('finance.revenue_tracking') }}">Revenue Tracking</a>
+                <a href="{{ url_for('finance.tax_reports') }}">Tax Reports</a>
+            </div>
+        </div>
+
+        <div class="dashboard-section ai-panel">
+            <div class="section-header">
+                <h2>AI Finance Insight</h2>
+                <p>Revenue prediction and payment warning</p>
+            </div>
+
+            <div class="ai-card">
+                <h3>Payment Health</h3>
+                <p>
+                    Monitor pending and failed payments regularly to improve cash flow
+                    and reduce subscription cancellation risk.
+                </p>
+                <a href="{{ url_for('analytics.ai_insights') }}" class="btn btn-success">View Insights</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}
