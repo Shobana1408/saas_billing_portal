@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="analytics-container">
+    <div class="dashboard-hero">
+        <div>
+            <span class="dashboard-badge">Churn Prediction</span>
+            <h1>Churn Risk Report</h1>
+            <p>Identify companies with high cancellation risk based on churn percentage.</p>
+        </div>
+
+        <div class="dashboard-hero-actions">
+            <a href="{{ url_for('analytics.analytics_home') }}" class="btn">Analytics Home</a>
+            <a href="{{ url_for('analytics.ai_insights') }}" class="btn btn-success">AI Insights</a>
+        </div>
+    </div>
+
+    <div class="dashboard-cards">
+        <div class="dashboard-card metric-card blue-card">
+            <div class="metric-icon">👥</div>
+            <h3>Total Users</h3>
+            <p>{{ churn_summary.total_users }}</p>
+            <span>Across churn dataset</span>
+        </div>
+
+        <div class="dashboard-card metric-card orange-card">
+            <div class="metric-icon">⚠️</div>
+            <h3>Avg Churn</h3>
+            <p>{{ churn_summary.average_churn }}%</p>
+            <span>Average churn percentage</span>
+        </div>
+
+        <div class="dashboard-card metric-card purple-card">
+            <div class="metric-icon">🚨</div>
+            <h3>High Risk</h3>
+            <p>{{ churn_summary.high_risk }}</p>
+            <span>Companies needing action</span>
+        </div>
+
+        <div class="dashboard-card metric-card green-card">
+            <div class="metric-icon">✅</div>
+            <h3>Low Risk</h3>
+            <p>{{ churn_summary.low_risk }}</p>
+            <span>Stable companies</span>
+        </div>
+    </div>
+
+    <div class="chart-box">
+        <div class="section-header">
+            <h2>Company Churn Data</h2>
+            <p>Sorted by highest churn risk.</p>
+        </div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Company</th>
+                    <th>Total Users</th>
+                    <th>Cancelled Users</th>
+                    <th>Churn Rate</th>
+                    <th>Plan</th>
+                    <th>Monthly Revenue</th>
+                    <th>Risk Level</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for company in churn_data %}
+                <tr>
+                    <td><strong>{{ company.company }}</strong></td>
+                    <td>{{ company.total_users }}</td>
+                    <td>{{ company.cancelled_users }}</td>
+                    <td>{{ company.churn_rate }}%</td>
+                    <td>{{ company.subscription_plan }}</td>
+                    <td>₹{{ company.monthly_revenue }}</td>
+
+                    <td>
+                        {% if company.risk_level == "High" %}
+                            <span class="status-pill danger">High</span>
+                        {% elif company.risk_level == "Medium" %}
+                            <span class="status-pill warning">Medium</span>
+                        {% else %}
+                            <span class="status-pill success">Low</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="7">No churn records found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

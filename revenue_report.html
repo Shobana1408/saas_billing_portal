@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="analytics-container">
+    <div class="dashboard-hero">
+        <div>
+            <span class="dashboard-badge">Revenue Report</span>
+            <h1>Revenue Performance</h1>
+            <p>Track monthly revenue, expenses, profit, subscriptions, and new users.</p>
+        </div>
+
+        <div class="dashboard-hero-actions">
+            <a href="{{ url_for('analytics.analytics_home') }}" class="btn">Analytics Home</a>
+            <a href="{{ url_for('analytics.forecast') }}" class="btn btn-success">Forecast</a>
+        </div>
+    </div>
+
+    <div class="dashboard-cards">
+        <div class="dashboard-card metric-card blue-card">
+            <div class="metric-icon">₹</div>
+            <h3>Total Revenue</h3>
+            <p>₹{{ revenue_summary.total_revenue }}</p>
+            <span>Yearly dataset total</span>
+        </div>
+
+        <div class="dashboard-card metric-card green-card">
+            <div class="metric-icon">💰</div>
+            <h3>Total Profit</h3>
+            <p>₹{{ revenue_summary.total_profit }}</p>
+            <span>Revenue minus expenses</span>
+        </div>
+
+        <div class="dashboard-card metric-card orange-card">
+            <div class="metric-icon">📉</div>
+            <h3>Total Expenses</h3>
+            <p>₹{{ revenue_summary.total_expenses }}</p>
+            <span>Operational cost</span>
+        </div>
+
+        <div class="dashboard-card metric-card purple-card">
+            <div class="metric-icon">📊</div>
+            <h3>Average Revenue</h3>
+            <p>₹{{ revenue_summary.average_revenue }}</p>
+            <span>Monthly average</span>
+        </div>
+    </div>
+
+    <div class="chart-box">
+        <div class="section-header">
+            <h2>Revenue Data Table</h2>
+            <p>Monthly records from AI dataset.</p>
+        </div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Month</th>
+                    <th>Revenue</th>
+                    <th>Expenses</th>
+                    <th>Profit</th>
+                    <th>Active Subscriptions</th>
+                    <th>New Users</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for record in revenue_records %}
+                <tr>
+                    <td><strong>{{ record.month }}</strong></td>
+                    <td>₹{{ record.revenue }}</td>
+                    <td>₹{{ record.expenses }}</td>
+                    <td>₹{{ record.profit }}</td>
+                    <td>{{ record.active_subscriptions }}</td>
+                    <td>{{ record.new_users }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="6">No revenue records found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

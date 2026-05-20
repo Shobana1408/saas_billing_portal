@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="analytics-container">
+    <div class="dashboard-hero">
+        <div>
+            <span class="dashboard-badge">Analytics Center</span>
+            <h1>AI Billing Analytics</h1>
+            <p>View revenue forecasting, churn prediction, spending insights, and business performance reports.</p>
+        </div>
+
+        <div class="dashboard-hero-actions">
+            <a href="{{ url_for('analytics.forecast') }}" class="btn">Revenue Forecast</a>
+            <a href="{{ url_for('analytics.ai_insights') }}" class="btn btn-success">AI Insights</a>
+        </div>
+    </div>
+
+    <div class="dashboard-cards">
+        <div class="dashboard-card metric-card blue-card">
+            <div class="metric-icon">₹</div>
+            <h3>Total Revenue</h3>
+            <p>₹{{ revenue_summary.total_revenue }}</p>
+            <span>From revenue dataset</span>
+        </div>
+
+        <div class="dashboard-card metric-card green-card">
+            <div class="metric-icon">📈</div>
+            <h3>Predicted Revenue</h3>
+            <p>₹{{ revenue_summary.predicted_revenue }}</p>
+            <span>Next month forecast</span>
+        </div>
+
+        <div class="dashboard-card metric-card orange-card">
+            <div class="metric-icon">⚠️</div>
+            <h3>Avg Churn</h3>
+            <p>{{ churn_summary.average_churn }}%</p>
+            <span>Average churn rate</span>
+        </div>
+
+        <div class="dashboard-card metric-card purple-card">
+            <div class="metric-icon">💳</div>
+            <h3>Failed Payments</h3>
+            <p>{{ spending_summary.failed_payments }}</p>
+            <span>From billing dataset</span>
+        </div>
+    </div>
+
+    <div class="dashboard-grid">
+        <div class="dashboard-section">
+            <div class="section-header">
+                <h2>Analytics Modules</h2>
+                <p>Select a report to explore business insights.</p>
+            </div>
+
+            <div class="quick-actions">
+                <a href="{{ url_for('analytics.revenue_report') }}">Revenue Report</a>
+                <a href="{{ url_for('analytics.user_growth') }}">User Growth</a>
+                <a href="{{ url_for('analytics.churn_report') }}">Churn Report</a>
+                <a href="{{ url_for('analytics.forecast') }}">Revenue Forecast</a>
+                <a href="{{ url_for('analytics.ai_insights') }}">AI Insights</a>
+                <a href="{{ url_for('billing.billing_overview') }}">Billing Overview</a>
+            </div>
+        </div>
+
+        <div class="dashboard-section ai-panel">
+            <div class="section-header">
+                <h2>AI Summary</h2>
+                <p>Automated billing intelligence</p>
+            </div>
+
+            <div class="ai-card">
+                <h3>Revenue Growth Prediction</h3>
+                <p>
+                    Based on past revenue data, next month revenue may reach
+                    <strong>₹{{ revenue_summary.predicted_revenue }}</strong>.
+                    Expected change is <strong>{{ revenue_summary.growth_percentage }}%</strong>
+                    from {{ revenue_summary.latest_month }}.
+                </p>
+
+                <a href="{{ url_for('analytics.forecast') }}" class="btn btn-success">View Forecast</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

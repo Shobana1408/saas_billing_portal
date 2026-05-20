@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="analytics-container">
+    <div class="dashboard-hero">
+        <div>
+            <span class="dashboard-badge">User Growth</span>
+            <h1>User Growth Report</h1>
+            <p>Track new users and active subscriptions month by month.</p>
+        </div>
+
+        <div class="dashboard-hero-actions">
+            <a href="{{ url_for('analytics.analytics_home') }}" class="btn">Analytics Home</a>
+            <a href="{{ url_for('analytics.revenue_report') }}" class="btn btn-success">Revenue Report</a>
+        </div>
+    </div>
+
+    <div class="dashboard-cards">
+        <div class="dashboard-card metric-card blue-card">
+            <div class="metric-icon">👥</div>
+            <h3>Total New Users</h3>
+            <p>{{ chart_data.new_users|sum }}</p>
+            <span>Across all months</span>
+        </div>
+
+        <div class="dashboard-card metric-card green-card">
+            <div class="metric-icon">📦</div>
+            <h3>Latest Subscriptions</h3>
+            <p>{{ chart_data.subscriptions[-1] }}</p>
+            <span>Latest month active subscriptions</span>
+        </div>
+
+        <div class="dashboard-card metric-card orange-card">
+            <div class="metric-icon">📈</div>
+            <h3>Latest New Users</h3>
+            <p>{{ chart_data.new_users[-1] }}</p>
+            <span>Latest month user growth</span>
+        </div>
+
+        <div class="dashboard-card metric-card purple-card">
+            <div class="metric-icon">🗓️</div>
+            <h3>Total Months</h3>
+            <p>{{ chart_data.months|length }}</p>
+            <span>Dataset period</span>
+        </div>
+    </div>
+
+    <div class="chart-box">
+        <div class="section-header">
+            <h2>User Growth Data</h2>
+            <p>Monthly active subscriptions and new users.</p>
+        </div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Month</th>
+                    <th>Active Subscriptions</th>
+                    <th>New Users</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for month in chart_data.months %}
+                <tr>
+                    <td><strong>{{ month }}</strong></td>
+                    <td>{{ chart_data.subscriptions[loop.index0] }}</td>
+                    <td>{{ chart_data.new_users[loop.index0] }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="3">No user growth data found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
